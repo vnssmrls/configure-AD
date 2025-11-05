@@ -25,6 +25,7 @@ This tutorial outlines the implementation of on-premises Active Directory within
 - Create Domain Admin within domain
 - Organize users and Security Groups
 - Join Client-1 to your Domain (mydomain.com) and verify connectivity
+- Use Remote Desktop to setup non admin users
 - Create thousands of users in bulk using a PowerShell script
 - Test the setup by logging into the Client-1 as one of the created users
 
@@ -65,6 +66,8 @@ Promote as a Domain Controller</br>
 - Configure as DC and setup a new forest as mydomain.com</br>
 - DC-1 now requires login context mydomain.com\vnssmrls </br>
 - In Active Directory create admin user within domain</br>
+- ADUC -> Create Organizational Unit -> "_EMPLOYEES"
+- Create new employee Jane Doe user "jane_admin"
 - Add admin to "Domain Admins" Security Group</br>
 </p>
 
@@ -81,19 +84,41 @@ Promote as a Domain Controller</br>
 <img src="https://i.imgur.com/Y0Rh8lo.png" height="80%" width="80%" alt="join domain"/>
 </p>
 
+<h3>Setup Remote Desktop for non-administrative users on Client-1</h3>
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+- Log into Client-1 as mydomain.com\jane_admin </br>
+- Start -> Open System Properties</br>
+- Click “Remote Desktop”</br>
+- Allow “domain users” access to remote desktop</br>
+- You can now log into Client-1 as a normal, non-administrative user 
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="join domain"/>
+<img src="https://i.imgur.com/XOZgPwX.png" height="80%" width="80%" alt="non admin users"/>
+</p>
+
+<h3>Create thousands of users in bulk using a PowerShell script</h3>
+<p>
+- Login to DC-1 as jane_admin
+- Open PowerShell_ise as an administrator</br>
+- Create a new File and paste the contents of the <a href="https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1">script</a> into it </br>
+- Run the script and observe the accounts being created</br>
+- When finished, open ADUC -> _EMPLOYEES to see user accounts created</br>
 </p>
 
 <p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+<img src="https://i.imgur.com/8Nw3TVz.png" height="80%" width="80%" alt="users"/>
+</p>
+
+<h3>Test your Setup</h3>
+<p>
+- Select 1 of the many user accounts created to test connection</br>
+- Attempt to log into Client-1</br>
+- Chose "beg.cuh" and opened command prompt to show login was successful</br>
 </p>
 
 <p>
-<img src="" height="80%" width="80%" alt="join domain"/>
+<img src="https://i.imgur.com/I30OykX.jpeg" height="80%" width="80%" alt="testing connection"/>
 </p>
 
+<p>Congratulations! You have implementated on-premises Active Directory within an Azure virtual machine!</p>
